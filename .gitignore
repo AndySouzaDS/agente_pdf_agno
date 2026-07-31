@@ -1,0 +1,22 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# docs particulares
+01_introducao/
+docs/
+scripts_auxiliares/
+2417_2T25.pdf
+
+# Virtual environments
+.venv
+
+# Segredos
+.env
+
+# Dados locais do agente (vector db, sqlite)
+tmp/

@@ -15,7 +15,7 @@ from agno.vectordb.chroma import ChromaDb
 from agno.models.openrouter import OpenRouter
 from agno.knowledge.knowledge import Knowledge
 from agno.knowledge.reader.pdf_reader import PDFReader
-from agno.knowledge.embedder.google import GeminiEmbedder
+from agno.knowledge.embedder.sentence_transformer import SentenceTransformerEmbedder
 from dotenv import load_dotenv
 import asyncio
 
@@ -25,10 +25,10 @@ load_dotenv()
 # RAG: base vetorial do PDF
 # --------------------------------------------------------------------------
 vector_db = ChromaDb(
-    collection="pdf_agent",
+    collection="pdf_agent_st",  # nome novo — ver ponto 3 abaixo
     path="tmp/chromadb",
     persistent_client=True,
-    embedder=GeminiEmbedder(),
+    embedder=SentenceTransformerEmbedder(),
 )
 
 knowledge = Knowledge(

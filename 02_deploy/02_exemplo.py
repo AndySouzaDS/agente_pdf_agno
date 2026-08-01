@@ -53,18 +53,33 @@ agent_os = AgentOS(
 
 app = agent_os.get_app()
 
+# Ingestão de conteúdo no startup do app, por conta do deploy no Render
+@app.on_event("startup")
+async def ingest_report() -> None:
+    await knowledge.add_content_async(
+        url="https://s3.sa-east-1.amazonaws.com/static.grendene.aatb.com.br/releases/2417_2T25.pdf",
+        metadata={
+            "source": "Grandene",
+            "type": "pdf",
+            "description": "Relatório Trimestral Grandene - 2T25"
+        },
+        skip_if_exists=True,
+        reader=PDFReader(),
+    )
+
+
 # Run
 if __name__ == "__main__":
-    knowledge.add_content(
-            url="https://s3.sa-east-1.amazonaws.com/static.grendene.aatb.com.br/releases/2417_2T25.pdf",
-            metadata={
-                "source": "Grandene",
-                "type": "pdf",
-                "description": "Relatório Trimestral Grandene - 2T25"  
-            },
-            skip_if_exists=True,
-            reader=PDFReader()
-        )
+    # knowledge.add_content(
+    #         url="https://s3.sa-east-1.amazonaws.com/static.grendene.aatb.com.br/releases/2417_2T25.pdf",
+    #         metadata={
+    #             "source": "Grandene",
+    #             "type": "pdf",
+    #             "description": "Relatório Trimestral Grandene - 2T25"  
+    #         },
+    #         skip_if_exists=True,
+    #         reader=PDFReader()
+    #     )
 
     agent_os.serve(
         app="02_exemplo:app",

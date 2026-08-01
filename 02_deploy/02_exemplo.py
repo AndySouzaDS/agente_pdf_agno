@@ -18,6 +18,7 @@ from agno.knowledge.reader.pdf_reader import PDFReader
 from agno.knowledge.embedder.cohere import CohereEmbedder
 from dotenv import load_dotenv
 import asyncio
+import os
 
 load_dotenv()
 
@@ -25,10 +26,10 @@ load_dotenv()
 # RAG: base vetorial do PDF
 # --------------------------------------------------------------------------
 vector_db = ChromaDb(
-    collection="pdf_agent_cohere",  # nome novo de novo — dimensões diferentes
+    collection="pdf_agent_cohere",
     path="tmp/chromadb",
     persistent_client=True,
-    embedder=CohereEmbedder(),
+    embedder=CohereEmbedder(api_key=os.getenv("CO_API_KEY")),
 )
 
 knowledge = Knowledge(

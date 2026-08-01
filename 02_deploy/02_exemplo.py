@@ -15,7 +15,7 @@ from agno.vectordb.chroma import ChromaDb
 from agno.models.openrouter import OpenRouter
 from agno.knowledge.knowledge import Knowledge
 from agno.knowledge.reader.pdf_reader import PDFReader
-from agno.knowledge.embedder.fastembed import FastEmbedEmbedder
+from agno.knowledge.embedder.cohere import CohereEmbedder
 from dotenv import load_dotenv
 import asyncio
 
@@ -25,10 +25,10 @@ load_dotenv()
 # RAG: base vetorial do PDF
 # --------------------------------------------------------------------------
 vector_db = ChromaDb(
-    collection="pdf_agent_fastembed",  # nome novo — mesma lógica de antes (dimensões diferentes)
+    collection="pdf_agent_cohere",  # nome novo de novo — dimensões diferentes
     path="tmp/chromadb",
     persistent_client=True,
-    embedder=FastEmbedEmbedder(),  # modelo padrão: BAAI/bge-small-en-v1.5
+    embedder=CohereEmbedder(),
 )
 
 knowledge = Knowledge(

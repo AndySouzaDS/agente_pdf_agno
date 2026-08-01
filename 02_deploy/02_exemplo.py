@@ -17,6 +17,7 @@ from agno.knowledge.knowledge import Knowledge
 from agno.knowledge.reader.pdf_reader import PDFReader
 from agno.knowledge.embedder.google import GeminiEmbedder
 from dotenv import load_dotenv
+import asyncio
 
 load_dotenv()
 
@@ -68,18 +69,20 @@ agent = Agent(
 # --------------------------------------------------------------------------
 @asynccontextmanager
 async def lifespan(app):
-    await knowledge.add_content_async(
-        url="https://s3.sa-east-1.amazonaws.com/static.grendene.aatb.com.br/releases/2417_2T25.pdf",
-        metadata={
-            "source": "Grandene",
-            "type": "pdf",
-            "description": "Relatório Trimestral Grandene - 2T25",
-        },
-        skip_if_exists=True,
-        reader=PDFReader(),
-    )
+    async def ingest():
+        await knowledge.add_content_async(
+            url="https://s3.sa-east-1.amazonaws.com/static.grendene.aatb.com.br/releases/2417_2T25.pdf",
+            metadata={
+                "source": "Grandene",
+                "type": "pdf",
+                "description": "Relatório Trimestral Grandene - 2T25",
+            },
+            skip_if_exists=True,
+            reader=PDFReader(),
+        )
+
+    asyncio.create_task(ingest())  # dispara em background, não bloqueia o startup
     yield
-    # (nada a fazer no shutdown por enquanto)
 
 
 # --------------------------------------------------------------------------

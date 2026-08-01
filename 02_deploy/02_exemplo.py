@@ -105,6 +105,6 @@ if __name__ == "__main__":
     agent_os.serve(
         app="02_exemplo:app",
         host="0.0.0.0",
-        port=7777,
+        port=10000,
         reload=True,
     )

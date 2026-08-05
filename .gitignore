@@ -9,9 +9,9 @@ wheels/
 # docs particulares
 01_introducao/
 docs/
-scripts_auxiliares/
-scripts_comentados/
-2417_2T25.pdf
+img/
+00_referencias
+
 
 # Virtual environments
 .venv

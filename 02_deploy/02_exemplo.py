@@ -105,6 +105,9 @@ if __name__ == "__main__":
     agent_os.serve(
         app="02_exemplo:app",
         host="0.0.0.0",
-        port=10000,  # localmente port=7777 e produção(render) port=10000
+        # Local, sem a env var PORT setada: cai no 7777.
+        # No Render, a plataforma injeta PORT automaticamente (normalmente 10000) —
+        # não precisa mais comentar/descomentar isso a cada deploy.
+        port=int(os.environ.get("PORT", 7777)),
         reload=True,
     )
